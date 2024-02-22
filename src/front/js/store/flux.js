@@ -1,6 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
+			token: null,
 			message: null,
 			demo: [
 				{
@@ -21,15 +22,61 @@ const getState = ({ getStore, getActions, setStore }) => {
 				getActions().changeColor(0, "green");
 			},
 
+			syncToken: () => {
+				const token = sessionStorage.getItem("token");
+				console.log("session loading getting token")
+				if (token && token != "" && token != undefined && token != null) setStore({ token: token })
+			},
+
+			logout: () => {
+				sessionStorage.removeItem("token");
+				console.log("session ends")
+				setStore({ token: null })
+			},
+
+			login: async (email, password) => {
+				try {
+					const res = await fetch("https://reimagined-space-spork-r4rv5qpxxx9hp5v6-3001.app.github.dev/api/token", {
+						method: 'POST',
+						body: JSON.stringify({
+							email: email,
+							password: password
+						}),
+						headers: {
+							'Content-Type': 'application/json'
+						}
+					});
+
+					if (res.status !== 200) {
+						alert("There has been an error");
+						return false;
+					}
+
+					const data = await res.json();
+					console.log("this came from the backend", data);
+					sessionStorage.setItem("token", data.access_token);
+					setStore({ token: data.access_token })
+					return true;
+				} catch (error) {
+					console.error("There has been an error:", error);
+					return false;
+				}
+			},
+
 			getMessage: async () => {
-				try{
+				const store = getStore();
+				try {
 					// fetching data from the backend
-					const resp = await fetch(process.env.BACKEND_URL + "/api/hello")
+					const resp = await fetch(process.env.BACKEND_URL + "/api/hello", {
+						headers: {
+							'Authorization': 'Bearer ' + store.token
+						}
+					});
 					const data = await resp.json()
 					setStore({ message: data.message })
 					// don't forget to return something, that is how the async resolves
 					return data;
-				}catch(error){
+				} catch (error) {
 					console.log("Error loading message from backend", error)
 				}
 			},
