@@ -33,7 +33,32 @@ const getState = ({ getStore, getActions, setStore }) => {
 				console.log("session ends")
 				setStore({ token: null })
 			},
+			register: async (email, password) => {
+				try {
+					const res = await fetch("https://reimagined-space-spork-r4rv5qpxxx9hp5v6-3001.app.github.dev/api/user", {
+						method: 'POST',
+						body: JSON.stringify({
+							email: email,
+							password: password
+						}),
+						headers: {
+							'Content-Type': 'application/json'
+						}
+					});
 
+					if (res.status !== 200) {
+						alert("There has been an error");
+						return false;
+					}
+
+					const data = await res.json();
+					console.log("this came from the user backend", data);
+					return true;
+				} catch (error) {
+					console.error("There has been an error:", error);
+					return false;
+				}
+			},
 			login: async (email, password) => {
 				try {
 					const res = await fetch("https://reimagined-space-spork-r4rv5qpxxx9hp5v6-3001.app.github.dev/api/token", {
@@ -66,15 +91,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 			getMessage: async () => {
 				const store = getStore();
 				try {
-					// fetching data from the backend
-					const resp = await fetch(process.env.BACKEND_URL + "/api/hello", {
+					const resp = await fetch("https://reimagined-space-spork-r4rv5qpxxx9hp5v6-3001.app.github.dev/api/hello", {
 						headers: {
 							'Authorization': 'Bearer ' + store.token
 						}
 					});
 					const data = await resp.json()
 					setStore({ message: data.message })
-					// don't forget to return something, that is how the async resolves
+					return data;
+				} catch (error) {
+					console.log("Error loading message from backend", error)
+				}
+			},
+			getUser: async () => {
+				const store = getStore();
+				try {
+					const resp = await fetch("https://reimagined-space-spork-r4rv5qpxxx9hp5v6-3001.app.github.dev/api/privateuser", {
+						headers: {
+							'Authorization': 'Bearer ' + store.token
+						}
+					});
+					const data = await resp.json()
+					setStore({ message: data.message })
 					return data;
 				} catch (error) {
 					console.log("Error loading message from backend", error)
