@@ -15,6 +15,7 @@ api = Blueprint('api', __name__)
 
 # Allow CORS requests to this API
 CORS(api)
+# CORS(api, resources={r"/api/*": {"origins": "https://reimagined-space-spork-r4rv5qpxxx9hp5v6-3001.app.github.dev/"}})
 
 @api.route("/token", methods=["POST"])
 def create_token():

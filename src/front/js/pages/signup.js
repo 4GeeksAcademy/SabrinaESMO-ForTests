@@ -20,17 +20,9 @@ export const Signup = () => {
         <div className="container text-center mt-5 d-flex justify-content-center">
             <div className="col-md-6">
                 <h1>Welcome, Signup form:</h1>
-                <form className="form_signup mt-5">
-                    <div>
-                        <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
-                        <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value={email} onChange={(e) => setEmail(e.target.value)} />
-                    </div>
-                    <div>
-                        <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
-                        <input type="password" className="form-control" id="exampleInputPassword1" value={password} onChange={(e) => setPassword(e.target.value)} />
-                    </div>
-                    <button type="submit" className="btn btn-primary mt-3" onClick={handleSubmit} >Submit</button>
-                </form>
+                <input type="text" value={email} placeholder="email" onChange={(e) => setEmail(e.target.value)} />
+                <input type="text" value={password} placeholder="password" onChange={(e) => setPassword(e.target.value)} />
+                <button type="submit" className="btn btn-primary mt-3" onClick={handleSubmit} >Submit</button>
             </div>
         </div>
     );
