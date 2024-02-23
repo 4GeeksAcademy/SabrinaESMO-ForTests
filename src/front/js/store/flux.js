@@ -46,14 +46,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 						}
 					});
 
-					if (res.status !== 200) {
-						alert("There has been an error");
-						return false;
-					}
-
-					const data = await res.json();
-					console.log("this came from the user backend", data);
-					return true;
+					if (res.status === 200) {
+						alert("Registro exitoso");
+						return true;
+					} else if (res.status === 401) {
+						const errorData = await res.json();
+						alert(errorData.msg)
+						return false
+					};
 				} catch (error) {
 					console.error("There has been an error:", error);
 					return false;
@@ -72,16 +72,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 						}
 					});
 
-					if (res.status !== 200) {
-						alert("There has been an error");
+					if (res.status === 200) {
+						const data = await res.json();
+						sessionStorage.setItem("token", data.access_token);
+						setStore({ token: data.access_token });
+						return true;
+					} else if (res.status === 401) {
+						const errorData = await res.json();
+						alert(errorData.msg);
 						return false;
 					}
-
-					const data = await res.json();
-					console.log("this came from the backend", data);
-					sessionStorage.setItem("token", data.access_token);
-					setStore({ token: data.access_token })
-					return true;
 				} catch (error) {
 					console.error("There has been an error:", error);
 					return false;

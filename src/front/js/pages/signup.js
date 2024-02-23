@@ -14,18 +14,23 @@ export const Signup = () => {
         const success = await actions.register(email, password);
         if (success) {
             navigate("/login");
-        } else {
-            alert("Registration failed. Please try again.");
         }
     };
-
     return (
-        <div className="text-center mt-5">
-            <h1>Signup register</h1>
-            <div>
-                <input type="text" placeholder="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                <input type="password" placeholder="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                <button onClick={handleSubmit}>Submit</button>
+        <div className="container text-center mt-5 d-flex justify-content-center">
+            <div className="col-md-6">
+                <h1>Welcome, Signup form:</h1>
+                <form className="form_signup mt-5">
+                    <div>
+                        <label className="form-label">Email address</label>
+                        <input type="email" className="form-control" id="exampleInputEmail1" placeholder="xxxxx@xxxxx.com" aria-describedby="emailHelp" value={email} onChange={(e) => setEmail(e.target.value)} />
+                    </div>
+                    <div>
+                        <label className="form-label">Password</label>
+                        <input type="password" className="form-control" id="exampleInputPassword1" value={password} onChange={(e) => setPassword(e.target.value)} />
+                    </div>
+                    <button type="submit" className="btn btn-primary mt-3" onClick={handleSubmit} >Submit</button>
+                </form>
             </div>
         </div>
     );

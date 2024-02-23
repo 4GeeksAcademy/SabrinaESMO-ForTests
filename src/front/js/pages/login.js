@@ -18,13 +18,21 @@ export const Login = () => {
     if (store.token && store.token != "" && store.token != null) navigate("/private")
 
     return (
-        <div className="text-center mt-5">
-            <h1>Login</h1>
-            <div>
+        <div className="container text-center mt-5 d-flex justify-content-center">
+            <div className="col-md-6">
+                <h1>Login</h1>
                 <p>¿Nuevo? <Link to="/signup">Registrate</Link></p>
-                <input type="text" placeholder="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                <input type="password" placeholder="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                <button onClick={handleClick}>Send</button>
+                <form>
+                    <div>
+                        <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
+                        <input type="email" className="form-control" id="exampleInputEmail1" placeholder="xxxxx@xxxxx.com" aria-describedby="emailHelp" value={email} onChange={(e) => setEmail(e.target.value)} />
+                    </div>
+                    <div>
+                        <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
+                        <input type="password" className="form-control" id="exampleInputPassword1" value={password} onChange={(e) => setPassword(e.target.value)} />
+                    </div>
+                    <button type="submit" className="btn btn-primary mt-3" onClick={handleClick} >Submit</button>
+                </form>
             </div>
         </div>
     );

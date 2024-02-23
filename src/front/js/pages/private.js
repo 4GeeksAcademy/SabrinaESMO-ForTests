@@ -9,11 +9,14 @@ export const Private = () => {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		if (store.token && store.token != null && store.token != "")
-			actions.getUser()
-	}, [store.token])
+		if (store.token === "" || store.token === null) {
+			navigate("/");
+		} else {
+			actions.getUser();
+		}
+	}, [store.token]);
 
-	if (store.token == "" || store.token == null) navigate("/")
+
 
 	return (
 		<div className="container">

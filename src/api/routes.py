@@ -20,7 +20,12 @@ CORS(api)
 def create_token():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
-    if email != "test" or password != "test":
+
+    user = User.query.filter_by(email=email).first()
+
+    if not user:
+        return jsonify({"msg": "User not found"}), 401
+    if user.password != password:
         return jsonify({"msg": "Bad email or password"}), 401
 
     access_token = create_access_token(identity=email)
@@ -30,7 +35,7 @@ def create_token():
 @jwt_required()
 def get_hello():
     email = get_jwt_identity()
-    dictionary = {"message": "hello world " + email}
+    dictionary = {"message": "hello User " + email}
     return jsonify(dictionary)
 
 @api.route("/privateuser", methods=["GET"])
@@ -41,7 +46,7 @@ def get_user():
     return jsonify(dictionary)
 
 @api.route('/user', methods=['GET'])
-def get_users():
+def get_all_users():
 
     all_users = User.query.all()
     all_users = list(map(lambda x: x.serialize(), all_users))
@@ -54,10 +59,15 @@ def add_user():
     password = request.json.get("password")
     is_active = True
 
-    required_fields = [email, password,is_active]
+    required_fields = [email, password, is_active]
 
     if any(field is None for field in required_fields):
         return jsonify({'error': 'You must provide an email and a password'}), 400
+    
+    user = User.query.filter_by(email=email).first()
+
+    if user:
+        return jsonify({"msg": "This user already has an account"}), 401
     
     try:
         new_user = User(email=email, password=password, is_active=is_active)
