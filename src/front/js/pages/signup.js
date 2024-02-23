@@ -22,11 +22,11 @@ export const Signup = () => {
                 <h1>Welcome, Signup form:</h1>
                 <form className="form_signup mt-5">
                     <div>
-                        <label className="form-label">Email address</label>
-                        <input type="email" className="form-control" id="exampleInputEmail1" placeholder="xxxxx@xxxxx.com" aria-describedby="emailHelp" value={email} onChange={(e) => setEmail(e.target.value)} />
+                        <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
+                        <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value={email} onChange={(e) => setEmail(e.target.value)} />
                     </div>
                     <div>
-                        <label className="form-label">Password</label>
+                        <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
                         <input type="password" className="form-control" id="exampleInputPassword1" value={password} onChange={(e) => setPassword(e.target.value)} />
                     </div>
                     <button type="submit" className="btn btn-primary mt-3" onClick={handleSubmit} >Submit</button>

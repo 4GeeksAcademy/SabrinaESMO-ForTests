@@ -25,7 +25,7 @@ export const Login = () => {
                 <form>
                     <div>
                         <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
-                        <input type="email" className="form-control" id="exampleInputEmail1" placeholder="xxxxx@xxxxx.com" aria-describedby="emailHelp" value={email} onChange={(e) => setEmail(e.target.value)} />
+                        <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value={email} onChange={(e) => setEmail(e.target.value)} />
                     </div>
                     <div>
                         <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
