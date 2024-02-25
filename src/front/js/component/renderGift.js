@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import "../../styles/giftListEdit.css";
 import { Link } from "react-router-dom";
 import foto from "../../img/rigo-baby.jpg"
+import "../../styles/renderGift.css"
 
 import { Context } from "../store/appContext";
 
@@ -17,11 +18,24 @@ export const RenderGifts = () => {
         }
     }, [store.images]);
 
+    const handleDelete = async idIndex => {
+        try {
+            await actions.deleteGift(idIndex);
+        } catch (error) {
+            console.error("Error al eliminar el contacto:", error);
+        }
+    };
+
     return store.gift.map((item, index) => (
         <div key={item.id} className="col">
+
             <div className="card">
+                <div className="top-icons-card d-flex justify-content-end p-2">
+                    <i className="fa-solid fa-circle-xmark" onClick={() => handleDelete(item.id)}></i>
+                </div>
                 <div className="imgCard text-center">
                     {randomImage && <img src={randomImage} className="card-img-top" alt="..." />}
+
                 </div>
                 <div className="card-body">
                     <ul className="list-group list-group-flush">
@@ -48,13 +62,17 @@ export const RenderGifts = () => {
                                 </span>
                                 <input
                                     type="text"
-                                    className="form-control"
+                                    className="form-control custom-link"
                                     id={`link${item.id}`}
                                     aria-label="Sizing example input"
                                     aria-describedby={`link${item.id}`}
                                     value={item.link}
-                                    disabled
+                                    onClick={() => window.open(item.link, '_blank')}
+                                    readOnly
                                 />
+                                {/* <a href={item.link} target="_blank" rel="noopener noreferrer">
+                                    <i className="fa-solid fa-globe"></i>
+                                </a> */}
                             </div>
                         </li>
                         <li className="list-group-item">

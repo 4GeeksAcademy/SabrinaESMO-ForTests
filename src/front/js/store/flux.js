@@ -108,7 +108,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return null;
 				}
 			},
+			deleteGift: (id) => {
+				const store = getStore(); // Obtener el estado actual del store
+				const updatedGifts = store.gift.filter(g => g.id !== id); // Filtrar los regalos para excluir el que tenga el ID proporcionado
 
+				setStore({ ...store, gift: updatedGifts }); // Actualizar el store con la lista de regalos actualizada
+
+				alert("¡Regalo eliminado correctamente!");
+			},
 
 			// fin de regalos
 			exampleFunction: () => {
@@ -128,7 +135,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			register: async (email, password) => {
 				try {
-					const res = await fetch("https://reimagined-space-spork-r4rv5qpxxx9hp5v6-3001.app.github.dev/api/user", {
+					const res = await fetch("https://ideal-lamp-6jqxwjwqpjq2xvrp-3001.app.github.dev/api/user", {
 						method: 'POST',
 						body: JSON.stringify({
 							email: email,
@@ -154,7 +161,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			login: async (email, password) => {
 				try {
-					const res = await fetch("https://reimagined-space-spork-r4rv5qpxxx9hp5v6-3001.app.github.dev/api/token", {
+					const res = await fetch("https://ideal-lamp-6jqxwjwqpjq2xvrp-3001.app.github.dev/api/token", {
 						method: 'POST',
 						body: JSON.stringify({
 							email: email,
@@ -184,7 +191,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			getMessage: async () => {
 				const store = getStore();
 				try {
-					const resp = await fetch("https://reimagined-space-spork-r4rv5qpxxx9hp5v6-3001.app.github.dev/api/hello", {
+					const resp = await fetch("https://ideal-lamp-6jqxwjwqpjq2xvrp-3001.app.github.dev/api/hello", {
 						headers: {
 							'Authorization': 'Bearer ' + store.token
 						}
@@ -200,7 +207,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			getUser: async () => {
 				const store = getStore();
 				try {
-					const resp = await fetch("https://reimagined-space-spork-r4rv5qpxxx9hp5v6-3001.app.github.dev/api/privateuser", {
+					const resp = await fetch("https://ideal-lamp-6jqxwjwqpjq2xvrp-3001.app.github.dev/api/privateuser", {
 						headers: {
 							'Authorization': 'Bearer ' + store.token
 						}

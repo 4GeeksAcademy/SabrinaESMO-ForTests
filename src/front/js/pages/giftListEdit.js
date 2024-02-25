@@ -61,7 +61,7 @@ export const GiftListEdit = ({ isEditing }) => {
 
     const handleSubmit = evt => {
         evt.preventDefault();
-        const url = isEditing ? `https://reimagined-space-spork-r4rv5qpxxx9hp5v6-3000.app.github.dev/giftlist/edit/${id}` : "https://reimagined-space-spork-r4rv5qpxxx9hp5v6-3000.app.github.dev/giftlist/new-gift";
+        const url = isEditing ? `https://ideal-lamp-6jqxwjwqpjq2xvrp-3001.app.github.dev/giftlist/edit/${id}` : "https://ideal-lamp-6jqxwjwqpjq2xvrp-3001.app.github.dev/giftlist/new-gift";
         actions.saveGiftData(formData, isEditing, id);
         setFormData({
             title: "",
@@ -90,19 +90,19 @@ export const GiftListEdit = ({ isEditing }) => {
                             <div className="mb-2">
                                 <div className="input-group mb-3">
                                     <span className="input-group-text" id="inputGroup-sizing-default">Título:</span>
-                                    <input type="text" className="form-control" id="title01" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value={formData.title} onChange={handleInputChange} />
+                                    <input type="text" name="title" className="form-control" id="title01" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value={formData.title} onChange={handleInputChange} />
                                 </div>
                             </div>
                             <div className="mb-2">
                                 <div className="input-group mb-3">
                                     <span className="input-group-text" id="inputGroup-sizing-default">Link:</span>
-                                    <input type="text" className="form-control" id="link01" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value={formData.link} onChange={handleInputChange} />
+                                    <input type="text" name="link" className="form-control" id="link01" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value={formData.link} onChange={handleInputChange} />
                                 </div>
                             </div>
                             <div className="mb-2">
                                 <div className="input-group mb-3">
                                     <label className="input-group-text" htmlFor="inputGroupSelect01">Estatus:</label>
-                                    <select className="form-select" id="inputGroupSelect01" value={formData.status} onChange={handleInputChange} >
+                                    <select className="form-select" name="status" id="inputGroupSelect01" value={formData.status} onChange={handleInputChange} >
                                         <option value=""></option>
                                         <option value="Disponible">Disponible</option>
                                         <option value="Reservado">Reservado</option>
