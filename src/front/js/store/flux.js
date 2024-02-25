@@ -7,22 +7,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 				id: "1",
 				user_id: "1",
 				title: "Example",
-				link: "www.amazon.com",
+				link: "https://www.amazon.com/",
 				status: "Disponible",
 			}, {
 				id: "2",
 				user_id: "1",
 				title: "Example",
-				link: "www.amazon.com",
+				link: "https://www.amazon.com/",
 				status: "Disponible",
 			}, {
 				id: "3",
 				user_id: "1",
 				title: "Example",
-				link: "www.amazon.com",
+				link: "https://www.amazon.com/",
 				status: "Disponible",
 			}],
 			images: [],
+			profileImages: [],
 			demo: [
 				{
 					title: "FIRST",
@@ -60,6 +61,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return null;
 				}
 			},
+
 			saveGiftData: (formData, isEditing, id) => {
 				const store = getStore(); // Obtener el estado actual del store
 				const gift = store.gift.slice(); // Copiar el array de regalos
@@ -83,7 +85,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			getPhoto: async () => {
+			getGiftPhoto: async () => {
 				try {
 					const response = await fetch(`https://api.pexels.com/v1/search?query=caja&per_page=5&locale=es-ES`, {
 						method: "GET",
@@ -98,6 +100,31 @@ const getState = ({ getStore, getActions, setStore }) => {
 						const photoUrls = responseData.photos.map(photo => photo.src.original);
 						// Almacena las URLs de las fotos en el store
 						store.images = photoUrls;
+						return photoUrls;
+					} else {
+						console.error("Error al buscar la foto:", response.status, response.statusText);
+						return null;
+					}
+				} catch (error) {
+					console.error("Error en el fetch de la foto:", error);
+					return null;
+				}
+			},
+			getProfilePhoto: async () => {
+				try {
+					const response = await fetch(`https://api.pexels.com/v1/search?query=animal&per_page=5&locale=es-ES`, {
+						method: "GET",
+						headers: {
+							"Authorization": "jdQFRDD6vmPXuYRrqbppN0YPiTww0jTWHtDOKMR7PuH7ES1k9MGh5z5i"
+						},
+					});
+
+					if (response.ok) {
+						const store = getStore();
+						const responseData = await response.json();
+						const photoUrls = responseData.photos.map(photo => photo.src.original);
+						// Almacena las URLs de las fotos en el store
+						store.profileImages = photoUrls;
 						return photoUrls;
 					} else {
 						console.error("Error al buscar la foto:", response.status, response.statusText);

@@ -39,7 +39,7 @@ export const GiftList = () => {
                         <a className="nav-link active" aria-current="page" href="#">Todos( )</a>
                         <a className="nav-link" href="#">Disponibles( )</a>
                         <a className="nav-link" href="#">Reservados( )</a>
-                        <a className="nav-link" href="#">Perfil( )</a>
+                        <a className="nav-link" href="/profile">Perfil( )</a>
                     </nav>
                 </div>
                 <div className="col-sm-9 p-5">

@@ -3,11 +3,22 @@ import PropTypes from "prop-types";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
+import { RenderProfile } from "../component/renderProfile";
 
-export const Profile = props => {
+export const Profile = () => {
 	const { store, actions } = useContext(Context);
 	const params = useParams();
 	const navigate = useNavigate();
+
+	useEffect(() => {
+		actions.syncToken()
+		if (store.token === "" || store.token === null) {
+			navigate("/");
+		} else {
+			actions.getUser();
+		}
+	}, []);
+
 
 	useEffect(() => {
 		if (store.token === "" || store.token === null) {
@@ -18,8 +29,8 @@ export const Profile = props => {
 	}, [store.token]);
 
 	return (
-		<div className="jumbotron">
-			<h1>Profile</h1>
+		<div className="profile">
+			<RenderProfile />
 		</div>
 	);
 };
