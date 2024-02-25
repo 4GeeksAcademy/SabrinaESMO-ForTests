@@ -8,6 +8,16 @@ export const Private = () => {
 	const { store, actions } = useContext(Context);
 	const navigate = useNavigate();
 
+
+	useEffect(() => {
+		actions.syncToken()
+		if (store.token === "" || store.token === null) {
+			navigate("/");
+		} else {
+			actions.getUser();
+		}
+	}, []);
+
 	useEffect(() => {
 		if (store.token === "" || store.token === null) {
 			navigate("/");

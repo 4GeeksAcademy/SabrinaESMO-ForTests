@@ -15,7 +15,7 @@ export const Login = () => {
         actions.login(email, password)
     };
 
-    if (store.token && store.token != "" && store.token != null) navigate("/private")
+    if (store.token && store.token != "" && store.token != null) navigate("/giftlist")
 
     return (
         <div className="container text-center mt-5 d-flex justify-content-center">

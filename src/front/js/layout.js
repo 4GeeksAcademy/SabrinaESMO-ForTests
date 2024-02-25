@@ -13,6 +13,8 @@ import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { Signup } from "./pages/signup";
 import { Profile } from "./pages/profile";
+import { GiftList } from "./pages/giftList";
+import { GiftListEdit } from "./pages/giftListEdit";
 
 //create your first component
 const Layout = () => {
@@ -21,7 +23,6 @@ const Layout = () => {
     const basename = process.env.BASENAME || "";
 
     if (!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL />;
-
     return (
         <div>
             <BrowserRouter basename={basename}>
@@ -33,6 +34,9 @@ const Layout = () => {
                         <Route element={<Signup />} path="/signup" />
                         <Route element={<Private />} path="/private" />
                         <Route element={<Profile />} path="/profile" />
+                        <Route element={<GiftList />} path="/giftlist" />
+                        <Route element={<GiftListEdit />} path="/giftlist/new-gift" />
+                        <Route element={<GiftListEdit isEditing />} path="/giftlist/edit/:id" />
                         <Route element={<NotFound />} path="*" />
                     </Routes>
                     <Footer />
