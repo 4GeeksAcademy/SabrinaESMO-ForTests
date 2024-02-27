@@ -15,7 +15,7 @@ export const GiftListEdit = ({ isEditing }) => {
     const [formData, setFormData] = useState({
         title: "",
         link: "",
-        status: "",
+        status: "Disponible",
     });
 
     useEffect(() => {
@@ -103,7 +103,6 @@ export const GiftListEdit = ({ isEditing }) => {
                                 <div className="input-group mb-3">
                                     <label className="input-group-text" htmlFor="inputGroupSelect01">Estatus:</label>
                                     <select className="form-select" name="status" id="inputGroupSelect01" value={formData.status} onChange={handleInputChange} >
-                                        <option value=""></option>
                                         <option value="Disponible">Disponible</option>
                                         <option value="Reservado">Reservado</option>
                                     </select>
