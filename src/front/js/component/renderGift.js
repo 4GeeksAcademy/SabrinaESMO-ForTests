@@ -7,7 +7,7 @@ import "../../styles/renderGift.css"
 import { Context } from "../store/appContext";
 
 
-export const RenderGifts = () => {
+export const RenderGifts = ({ uid }) => {
     const { store, actions } = useContext(Context);
     const [randomImage, setRandomImage] = useState("");
 
@@ -94,7 +94,7 @@ export const RenderGifts = () => {
                         </li>
                     </ul>
                     <div className="card-footer text-center">
-                        <Link to={`/giftlist/edit/${item.id}`}>
+                        <Link to={`/giftlist/${uid}/edit/${item.id}`}>
                             <button href="#" className="btn btn-primary">Editar</button>
                         </Link>
                     </div>

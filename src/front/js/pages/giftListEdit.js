@@ -8,7 +8,7 @@ import { Context } from "../store/appContext";
 
 export const GiftListEdit = ({ isEditing }) => {
     const { store, actions } = useContext(Context);
-    const { id } = useParams();
+    const { uid, gid } = useParams();
     const navigate = useNavigate();
 
 
@@ -19,8 +19,8 @@ export const GiftListEdit = ({ isEditing }) => {
     });
 
     useEffect(() => {
-        if (isEditing && id) {
-            actions.getGiftData(id)
+        if (isEditing && gid) {
+            actions.getGiftData(gid)
                 .then(gift => {
                     if (gift) {
                         setFormData({
@@ -32,7 +32,7 @@ export const GiftListEdit = ({ isEditing }) => {
                 })
                 .catch(error => console.error("Error al obtener los datos del regalo:", error));
         }
-    }, [isEditing, id]);
+    }, [isEditing, gid]);
 
     useEffect(() => {
         actions.syncToken()
@@ -61,14 +61,14 @@ export const GiftListEdit = ({ isEditing }) => {
 
     const handleSubmit = evt => {
         evt.preventDefault();
-        const url = isEditing ? `https://ideal-lamp-6jqxwjwqpjq2xvrp-3001.app.github.dev/giftlist/edit/${id}` : "https://ideal-lamp-6jqxwjwqpjq2xvrp-3001.app.github.dev/giftlist/new-gift";
-        actions.saveGiftData(formData, isEditing, id);
+        const url = isEditing ? `https://ideal-lamp-6jqxwjwqpjq2xvrp-3001.app.github.dev/giftlist/${uid}/edit/${gid}` : "https://ideal-lamp-6jqxwjwqpjq2xvrp-3001.app.github.dev/giftlist/new-gift";
+        actions.saveGiftData(formData, isEditing, gid);
         setFormData({
             title: "",
             link: "",
             status: "",
         });
-        navigate("/giftlist");
+        navigate(`/giftlist/${uid}`);
     };
 
     return (

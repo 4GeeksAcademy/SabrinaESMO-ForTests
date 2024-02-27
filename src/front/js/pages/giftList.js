@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { Link } from "react-router-dom";
 import "../../styles/giftlist.css";
 import foto from "../../img/rigo-baby.jpg"
@@ -9,6 +9,7 @@ import { Context } from "../store/appContext";
 
 export const GiftList = () => {
     const { store, actions } = useContext(Context);
+    const { uid } = useParams();
     const navigate = useNavigate();
 
 
@@ -44,7 +45,7 @@ export const GiftList = () => {
                 </div>
                 <div className="col-sm-9 p-5">
                     <div className="row row-cols-1 row-cols-md-2 g-4" id="giftRow">
-                        <RenderGifts />
+                        <RenderGifts uid={uid} />
                     </div>
                     <div className="d-grid gap-2 d-md-flex justify-content-md-end">
                         <button className="btn btn-primary me-md-2" type="button">Compartir</button>

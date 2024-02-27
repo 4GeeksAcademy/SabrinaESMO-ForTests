@@ -11,11 +11,17 @@ export const Login = () => {
     const navigate = useNavigate();
 
 
-    const handleClick = () => {
-        actions.login(email, password)
+    const handleClick = async () => {
+        const success = await actions.login(email, password);
+        if (success) {
+            const user = await actions.getUser(email);
+            if (user && user.id) {
+                navigate(`/giftlist/${user.id}`);
+            } else {
+                console.error("No se pudo obtener el ID del usuario");
+            }
+        }
     };
-
-    if (store.token && store.token != "" && store.token != null) navigate("/giftlist")
 
     return (
         <div className="container text-center mt-5 d-flex justify-content-center">

@@ -43,8 +43,15 @@ def get_hello():
 @jwt_required()
 def get_user():
     email = get_jwt_identity()
-    dictionary = {"message": "hello User " + email}
-    return jsonify(dictionary)
+    user = User.query.filter_by(email=email).first()
+    if user:
+        user_data = {
+            "message": "hello User " + email,
+            "id": user.id
+        }
+        return jsonify(user_data), 200
+    else:
+        return jsonify({"error": "User not found"}), 404
 
 @api.route('/user', methods=['GET'])
 def get_all_users():
@@ -58,8 +65,9 @@ def get_all_users():
 def add_user():
     email = request.json.get("email")
     password = request.json.get("password")
+    img = request.json.get("img")
 
-    required_fields = [email, password]
+    required_fields = [email, password,img]
 
     if any(field is None for field in required_fields):
         return jsonify({'error': 'You must provide an email and a password'}), 400
@@ -70,7 +78,7 @@ def add_user():
         return jsonify({"msg": "This user already has an account"}), 401
     
     try:
-        new_user = User(email=email, password=password, is_active=is_active)
+        new_user = User(email=email, password=password, img=img, name="")
         db.session.add(new_user)
         db.session.commit()
         return jsonify({'response': 'User added successfully'}), 200

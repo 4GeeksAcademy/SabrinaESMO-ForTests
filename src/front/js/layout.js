@@ -34,9 +34,9 @@ const Layout = () => {
                         <Route element={<Signup />} path="/signup" />
                         <Route element={<Private />} path="/private" />
                         <Route element={<Profile />} path="/profile" />
-                        <Route element={<GiftList />} path="/giftlist" />
+                        <Route element={<GiftList />} path="/giftlist/:uid" />
                         <Route element={<GiftListEdit />} path="/giftlist/new-gift" />
-                        <Route element={<GiftListEdit isEditing />} path="/giftlist/edit/:id" />
+                        <Route element={<GiftListEdit isEditing />} path="/giftlist/:uid/edit/:gid" />
                         <Route element={<NotFound />} path="*" />
                     </Routes>
                     <Footer />

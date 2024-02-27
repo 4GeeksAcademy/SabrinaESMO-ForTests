@@ -62,13 +62,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			saveGiftData: (formData, isEditing, id) => {
+			saveGiftData: (formData, isEditing, gid) => {
 				const store = getStore(); // Obtener el estado actual del store
 				const gift = store.gift.slice(); // Copiar el array de regalos
 
 				if (isEditing) {
 					// Actualizar el regalo existente
-					const updatedGiftIndex = gift.findIndex(g => g.id === id);
+					const updatedGiftIndex = gift.findIndex(g => g.id === gid);
 					if (updatedGiftIndex !== -1) {
 						gift[updatedGiftIndex] = { ...gift[updatedGiftIndex], ...formData };
 						setStore({ ...store, gift });
@@ -125,6 +125,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						const photoUrls = responseData.photos.map(photo => photo.src.original);
 						// Almacena las URLs de las fotos en el store
 						store.profileImages = photoUrls;
+						console.log(store.profileImages)
 						return photoUrls;
 					} else {
 						console.error("Error al buscar la foto:", response.status, response.statusText);
@@ -160,13 +161,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 				console.log("session ends")
 				setStore({ token: null })
 			},
-			register: async (email, password) => {
+			register: async (email, password, randomProfileImage) => {
 				try {
 					const res = await fetch("https://ideal-lamp-6jqxwjwqpjq2xvrp-3001.app.github.dev/api/user", {
 						method: 'POST',
 						body: JSON.stringify({
+							name: "",
 							email: email,
-							password: password
+							password: password,
+							img: randomProfileImage,
 						}),
 						headers: {
 							'Content-Type': 'application/json'
@@ -236,10 +239,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 				try {
 					const resp = await fetch("https://ideal-lamp-6jqxwjwqpjq2xvrp-3001.app.github.dev/api/privateuser", {
 						headers: {
+							'Content-Type': 'application/json',
 							'Authorization': 'Bearer ' + store.token
 						}
 					});
 					const data = await resp.json()
+					console.log(data)
 					setStore({ message: data.message })
 					return data;
 				} catch (error) {
