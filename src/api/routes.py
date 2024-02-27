@@ -58,9 +58,8 @@ def get_all_users():
 def add_user():
     email = request.json.get("email")
     password = request.json.get("password")
-    is_active = True
 
-    required_fields = [email, password, is_active]
+    required_fields = [email, password]
 
     if any(field is None for field in required_fields):
         return jsonify({'error': 'You must provide an email and a password'}), 400
