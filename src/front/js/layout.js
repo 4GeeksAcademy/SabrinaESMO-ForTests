@@ -14,6 +14,7 @@ import { Footer } from "./component/footer";
 import { Signup } from "./pages/signup";
 import { Profile } from "./pages/profile";
 import { GiftList } from "./pages/giftList";
+import { GiftListDos } from "./pages/giftListDos";
 import { GiftListEdit } from "./pages/giftListEdit";
 
 //create your first component
@@ -35,6 +36,7 @@ const Layout = () => {
                         <Route element={<Private />} path="/private" />
                         <Route element={<Profile />} path="/profile" />
                         <Route element={<GiftList />} path="/giftlist/:uid" />
+                        <Route element={<GiftListDos />} path="/giftlist/prueba" />
                         <Route element={<GiftListEdit />} path="/giftlist/new-gift" />
                         <Route element={<GiftListEdit isEditing />} path="/giftlist/:uid/edit/:gid" />
                         <Route element={<NotFound />} path="*" />

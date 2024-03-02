@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom"
 import { Link } from "react-router-dom";
 import "../../styles/giftlist.css";
-import foto from "../../img/rigo-baby.jpg"
 import { RenderGifts } from "../component/renderGift";
 
 import { Context } from "../store/appContext";

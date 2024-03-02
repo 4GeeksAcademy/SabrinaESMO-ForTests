@@ -3,6 +3,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 			token: null,
 			message: null,
+			currentUser: [],
+			currentList: [],
 			gift: [{
 				id: "1",
 				user_id: "1",
@@ -87,7 +89,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			getGiftPhoto: async () => {
 				try {
-					const response = await fetch(`https://api.pexels.com/v1/search?query=caja&per_page=5&locale=es-ES`, {
+					const response = await fetch(`https://api.pexels.com/v1/search?query=caja&per_page=3&locale=es-ES`, {
 						method: "GET",
 						headers: {
 							"Authorization": "jdQFRDD6vmPXuYRrqbppN0YPiTww0jTWHtDOKMR7PuH7ES1k9MGh5z5i"
@@ -110,9 +112,21 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return null;
 				}
 			},
+
+			deleteGift: (id) => {
+				const store = getStore(); // Obtener el estado actual del store
+				const updatedGifts = store.gift.filter(g => g.id !== id); // Filtrar los regalos para excluir el que tenga el ID proporcionado
+
+				setStore({ ...store, gift: updatedGifts }); // Actualizar el store con la lista de regalos actualizada
+
+				alert("¡Regalo eliminado correctamente!");
+			},
+
+			// fin de regalos
+
 			getProfilePhoto: async () => {
 				try {
-					const response = await fetch(`https://api.pexels.com/v1/search?query=animal&per_page=5&locale=es-ES`, {
+					const response = await fetch(`https://api.pexels.com/v1/search?query=animal&per_page=3&locale=es-ES`, {
 						method: "GET",
 						headers: {
 							"Authorization": "jdQFRDD6vmPXuYRrqbppN0YPiTww0jTWHtDOKMR7PuH7ES1k9MGh5z5i"
@@ -136,16 +150,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return null;
 				}
 			},
-			deleteGift: (id) => {
-				const store = getStore(); // Obtener el estado actual del store
-				const updatedGifts = store.gift.filter(g => g.id !== id); // Filtrar los regalos para excluir el que tenga el ID proporcionado
 
-				setStore({ ...store, gift: updatedGifts }); // Actualizar el store con la lista de regalos actualizada
-
-				alert("¡Regalo eliminado correctamente!");
-			},
-
-			// fin de regalos
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
 			},
@@ -244,11 +249,44 @@ const getState = ({ getStore, getActions, setStore }) => {
 						}
 					});
 					const data = await resp.json()
-					console.log(data)
-					setStore({ message: data.message })
+					setStore({
+						...store,
+						currentUser: {
+							id: data.id,
+							name: data.name,
+							email: data.email,
+							img: data.img,
+							message: data.message // Aquí se incluye el mensaje
+						}
+					});
+					console.log(store.currentUser);
+					return data;
+
+				} catch (error) {
+					console.log("Error loading message from user backend", error)
+				}
+			},
+			getAllList: async (id) => {
+				const store = getStore();
+				console.log(id)
+				try {
+					const resp = await fetch(`https://ideal-lamp-6jqxwjwqpjq2xvrp-3001.app.github.dev/api/privatelist?id=${id}`, {
+						method: "GET",
+						headers: {
+							'Content-Type': 'application/json'
+						}
+					});
+					const data = await resp.json();
+
+					setStore({
+						...store,
+						currentList: data
+					});
+
+					console.log(store.currentList);
 					return data;
 				} catch (error) {
-					console.log("Error loading message from backend", error)
+					console.log("Error loading message from list backend", error);
 				}
 			},
 			changeColor: (index, color) => {

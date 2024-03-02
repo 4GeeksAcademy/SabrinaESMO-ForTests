@@ -3,7 +3,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 import os
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User
+from api.models import db, User, List, Gift
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import create_access_token
@@ -45,13 +45,51 @@ def get_user():
     email = get_jwt_identity()
     user = User.query.filter_by(email=email).first()
     if user:
+        if user.name:
+            message = "Welcome " + user.name
+        else:
+            message = "Welcome " + user.email
+
         user_data = {
-            "message": "hello User " + email,
-            "id": user.id
+            "message": message,
+            "name": user.name,
+            "id": user.id,
+            "email": user.email,
+            "img": user.img
         }
         return jsonify(user_data), 200
     else:
         return jsonify({"error": "User not found"}), 404
+
+@api.route("/privatelist", methods=["GET"])
+def get_list():
+    id = request.args.get("id")
+    
+    if id is None:
+        return jsonify({"message": "ID parameter missing"}), 400
+    current_user = User.query.get(id)
+
+    if not current_user:
+        return jsonify({"message": "User not found"}), 404
+    
+    user_list = List.query.filter_by(user=current_user).all()
+    user_list = list(map(lambda x: x.serialize(), user_list))
+
+    return jsonify(user_list), 200
+
+    # email = get_jwt_identity()
+    # user = User.query.filter_by(email=email).first()
+
+    # if user:
+    #     lists = List.query.filter_by(user_id=user.id).all()
+
+    #     if lists:
+    #         list_data = [{"id": list.id, "user_id": list.user_id, "name": list.name} for list in lists]
+    #         return jsonify(list_data), 200
+    #     else:
+    #         return jsonify({"message": "No lists found for this user"}), 404
+    # else:
+    #     return jsonify({"error": "User not found"}), 404
 
 @api.route('/user', methods=['GET'])
 def get_all_users():

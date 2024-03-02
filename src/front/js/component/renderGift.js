@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from "react";
-import "../../styles/giftListEdit.css";
 import { Link } from "react-router-dom";
 import foto from "../../img/rigo-baby.jpg"
 import "../../styles/renderGift.css"
@@ -10,6 +9,8 @@ import { Context } from "../store/appContext";
 export const RenderGifts = ({ uid }) => {
     const { store, actions } = useContext(Context);
     const [randomImage, setRandomImage] = useState("");
+
+
 
     useEffect(() => {
         if (store.images.length > 0) {
