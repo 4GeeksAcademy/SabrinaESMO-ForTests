@@ -3,7 +3,6 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
     
 
-    
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), unique=False, nullable=True)
@@ -30,7 +29,7 @@ class List(db.Model):
     name = db.Column(db.String(80), unique=False, nullable=True)
 
     def __repr__(self):
-        return f'<List {self.nombre}>'
+        return f'<List {self.name}>'
 
     def serialize(self):
         return {
@@ -60,4 +59,4 @@ class Gift(db.Model):
             "status": self.status,
             "list_id": self.list_id,
             # do not serialize the password, its a security breach
-        }    
+        }

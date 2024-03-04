@@ -2,12 +2,10 @@ import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
-import { useNavigate } from "react-router-dom";
 
 export const Home = () => {
 	const { store, actions } = useContext(Context);
 	const [isAuthenticated, setIsAuthenticated] = useState(false)
-	const navigate = useNavigate();
 
 	useEffect(() => {
 		if (store.token && store.token !== null && store.token !== "") {
@@ -30,7 +28,6 @@ export const Home = () => {
 			<p>
 				Aquí pronto estará la home del proyecto final.
 			</p>
-			<button onClick={() => navigate("/giftlist/prueba")}> Ir a los regalos</button>
 		</div>
 	);
 };

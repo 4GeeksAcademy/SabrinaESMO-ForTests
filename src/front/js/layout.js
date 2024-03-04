@@ -5,17 +5,19 @@ import { BackendURL } from "./component/backendURL";
 
 import { Home } from "./pages/home";
 import { Login } from "./pages/login";
-import { Private } from "./pages/private";
-import { NotFound } from "./pages/NotFound";
+import { NotFound } from "./pages/notFound";
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { Signup } from "./pages/signup";
 import { Profile } from "./pages/profile";
+// import { GiftList } from "./pages/giftList";
+// import { Profile } from "./pages/profile";
 import { GiftList } from "./pages/giftList";
-import { GiftListDos } from "./pages/giftListDos";
-import { GiftListEdit } from "./pages/giftListEdit";
+import { SideBar } from "./component/sidebar";
+// import { GiftListEdit } from "./pages/giftListEdit";
+// import { Private } from "./pages/private";
 
 //create your first component
 const Layout = () => {
@@ -29,18 +31,25 @@ const Layout = () => {
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
                     <Navbar />
-                    <Routes>
-                        <Route element={<Home />} path="/" />
-                        <Route element={<Login />} path="/login" />
-                        <Route element={<Signup />} path="/signup" />
-                        <Route element={<Private />} path="/private" />
-                        <Route element={<Profile />} path="/profile" />
-                        <Route element={<GiftList />} path="/giftlist/:uid" />
-                        <Route element={<GiftListDos />} path="/giftlist/prueba" />
-                        <Route element={<GiftListEdit />} path="/giftlist/new-gift" />
-                        <Route element={<GiftListEdit isEditing />} path="/giftlist/:uid/edit/:gid" />
-                        <Route element={<NotFound />} path="*" />
-                    </Routes>
+                    <div className="row">
+                        {window.location.pathname === "/giftlist" ? (
+                            <div className="col-sm-3 bg-light">
+                                <SideBar />
+                            </div>
+                        ) : null}
+                        <div className={`col-sm-${window.location.pathname === "/giftlist" ? "12" : "9"} p-5`}>
+                            <Routes>
+                                <Route element={<Home />} path="/" />
+                                <Route element={<Login />} path="/login" />
+                                <Route element={<Signup />} path="/signup" />
+                                <Route element={<Profile />} path="/profile" />
+                                <Route element={<GiftList />} path="/giftlist/:uid" />
+                                <Route element={<GiftList />} path="/giftlist/:uid/disponible" />
+                                <Route element={<GiftList />} path="/giftlist/:uid/comprados" />
+                                <Route element={<NotFound />} path="*" />
+                            </Routes>
+                        </div>
+                    </div>
                     <Footer />
                 </ScrollToTop>
             </BrowserRouter>
