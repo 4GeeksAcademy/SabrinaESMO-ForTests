@@ -6,7 +6,7 @@ export const SideBar = () => {
     const { store, actions } = useContext(Context);
 
     return (
-        <div className="d-flex align-items-start">
+        <div className="d-flex align-items-start sidebar">
             <div className="nav flex-column nav-pills me-3 align-items-start" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                 <h5>Hola Usuario</h5>
                 <button className="nav-link" onClick={() => { }}>Gifts</button>
